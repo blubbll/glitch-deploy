@@ -21,12 +21,13 @@ const deploy = (clear) => new Promise((resolve, reject) => {
     const icon = {
         self: "🛠️",
         dir: "📁",
-        file: "📄",
+        file: "🗋",
         up: "↗️",
         ok: "✅",
         rem: "🗑️",
         add: "✨"
-    }
+    };
+    console.log(`${icon.self}Starting deployment${clear && " (with remote clear)"}...`);
     var Client = require('ftp');
     var c = new Client();
     let
@@ -37,10 +38,11 @@ const deploy = (clear) => new Promise((resolve, reject) => {
         newfolders = 0,
         newfoldersdone = 0;
     c.on('ready', async () => {
-        if (clear) await _clear();
+        clear && await _clear();
         console.log(await _deploy());
         resolve();
     })
+   
     const _clear = () => new Promise((resolve, reject) => {
         let all;
         c.list("/", 0, function(err, list) {
@@ -68,6 +70,7 @@ const deploy = (clear) => new Promise((resolve, reject) => {
         });
     });
     const _deploy = () => new Promise((resolve, reject) => {
+        
         // c.rmdir("/", true, () => {});
         require('glob')(`${__dirname}/**`, async (er, files) => {
             let all = files.length,
