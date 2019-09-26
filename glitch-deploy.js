@@ -3,7 +3,8 @@
     //imports
     const fs = require('fs'),
         path = require('path'),
-        glob = require('glob');
+        glob = require('glob'),
+        ftpClient = require('ftp');
 
     //tool
     const fontMap = new Map;
@@ -86,8 +87,7 @@
             add: "✨"
         };
         console.log(toMono(`${icon.self}Starting deployment${options.clear && " (with remote clear)"}...`));
-        var Client = require('ftp');
-        var c = new Client();
+        var c = new ftpClient();
         c.on('ready', async () => {
             options.clear && await _clear();
             await _deploy();

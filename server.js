@@ -17,16 +17,15 @@ const listener = app.listen(process.env.PORT, function() {
     console.log('Your app is listening on port ' + listener.address().port);
 });
 
-
 //let's go
 [(async () => {
     await require("./glitch-deploy")({
-        ftp:{
-           password: process.env.DEPLOY_PASS,
+        ftp: {
+            password: process.env.DEPLOY_PASS,
             user: process.env.DEPLOY_USER,
             host: process.env.DEPLOY_HOST
         },
         clear: true,
-        verbose: 0
+        verbose: false
     });
 })()];
