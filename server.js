@@ -17,7 +17,7 @@ const listener = app.listen(process.env.PORT, function() {
     console.log('Your app is listening on port ' + listener.address().port);
 });
 const fs = require("fs");
-const deploy = (clear) => new Promise((resolve, reject) => {
+const deploy = (options) => new Promise((resolve, reject) => {
     const icon = {
         self: "🛠️",
         dir: "📁",
@@ -27,7 +27,7 @@ const deploy = (clear) => new Promise((resolve, reject) => {
         rem: "🗑️",
         add: "✨"
     };
-    console.log(`${icon.self}Starting deployment${clear && " (with remote clear)"}...`);
+    console.log(`${icon.self}Starting deployment${options.clear && " (with remote clear)"}...`);
     var Client = require('ftp');
     var c = new Client();
     let
@@ -38,11 +38,10 @@ const deploy = (clear) => new Promise((resolve, reject) => {
         newfolders = 0,
         newfoldersdone = 0;
     c.on('ready', async () => {
-        clear && await _clear();
+        options.clear && await _clear();
         console.log(await _deploy());
         resolve();
     })
-   
     const _clear = () => new Promise((resolve, reject) => {
         let all;
         c.list("/", 0, function(err, list) {
@@ -53,7 +52,8 @@ const deploy = (clear) => new Promise((resolve, reject) => {
                         oldfolders++;
                         c.rmdir(file.name, () => {
                             oldfoldersgone++;
-                            console.log(`${icon.self}${icon.rem}${icon.dir}deleting remote folder '${file.name}'...`);
+                            options.verbose &&
+                                console.log(`${icon.self}${icon.rem}${icon.dir}deleting remote folder '${file.name}'...`);
                             if (oldfilesgone + oldfoldersgone === oldfiles + oldfolders) resolve();
                         });
                     }
@@ -61,7 +61,8 @@ const deploy = (clear) => new Promise((resolve, reject) => {
                 } else {
                     oldfiles++;
                     c.delete(file.name, () => {
-                        console.log(`${icon.self}${icon.rem}${icon.file}deleting remote file '${file.name}'...`);
+                        options.verbose &&
+                            console.log(`${icon.self}${icon.rem}${icon.file}deleting remote file '${file.name}'...`);
                         oldfilesgone++;
                         if (oldfilesgone + oldfoldersgone === oldfiles + oldfolders) resolve();
                     });
@@ -70,7 +71,6 @@ const deploy = (clear) => new Promise((resolve, reject) => {
         });
     });
     const _deploy = () => new Promise((resolve, reject) => {
-        
         // c.rmdir("/", true, () => {});
         require('glob')(`${__dirname}/**`, async (er, files) => {
             let all = files.length,
@@ -86,7 +86,8 @@ const deploy = (clear) => new Promise((resolve, reject) => {
             const _upfolders = (dirs) => new Promise((resolve, reject) => {
                 dirs.forEach(dir => {
                     const folder = `${dir.split("/app/")[1]}`;
-                    console.log(`${icon.self}${icon.add}${icon.dir}creating remote dir '${folder}'...`)
+                    options.verbose &&
+                        console.log(`${icon.self}${icon.add}${icon.dir}creating remote dir '${folder}'...`)
                     newfolders++;
                     c.mkdir(folder, true, () => {
                         newfoldersdone++;
@@ -103,7 +104,8 @@ const deploy = (clear) => new Promise((resolve, reject) => {
                     const rf = `/${file.split("/app/")[1]}`; //calculate remote path
                     if (fs.existsSync(file)) { //maybe-redundant local-exist check
                         curr++;
-                        console.log(`${icon.self}${icon.up}${icon.file}loading '${file}' to '${rf}'...`);
+                        options.verbose &&
+                            console.log(`${icon.self}${icon.up}${icon.file}loading '${file}' to '${rf}'...`);
                         c.put(file, rf, (err) => {
                             curr === files.length && resolve();
                             if (err) return reject(`deploy error: ${err} while uploading ${file} to ${rf}`);
@@ -111,23 +113,23 @@ const deploy = (clear) => new Promise((resolve, reject) => {
                     }
                 })
             });
-          
             await _upfolders(_folders);
             //console.log(`${icon.self}${icon.ok}${_folders.length} folders deployed!`);
             await _upfiles(_files);
             //console.log(`${icon.self}${icon.ok}${_files.length} files deployed!`);
-            console.log(`${icon.self}${icon.ok}: ${_files.length}${icon.file} & ${icon.dir}${_folders.length} deployed!`);
-          
-        }); 
+            console.log(`${icon.self}${icon.ok}${_files.length}${icon.file} & ${_folders.length}${icon.dir} deployed!`);
+            //end client
+        });
     });
-
     c.connect({
         password: process.env.DEPLOY_PASS,
         user: process.env.DEPLOY_USER,
         host: process.env.DEPLOY_HOST
     });
 });
-
 [(async () => {
-    await deploy(true);
+    await deploy({
+        clear: true,
+        verbose: false
+    });
 })()];
