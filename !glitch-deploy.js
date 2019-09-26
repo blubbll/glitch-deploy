@@ -86,13 +86,13 @@
             rem: "🗑️",
             add: "✨"
         };
-        console.log(toMono(`${icon.self}Starting deployment${options.clear && " (with remote clear)"}...`));
+        console.log(toMono(`${icon.self}Starting deployment${options.clear ? " (with remote clear)":''} ...`));
         var c = new ftpClient();
         c.on('ready', async () => {
             options.clear && await _clear();
             await _deploy();
-            resolve();
-        })
+            return resolve();
+        });
         const _clear = () => new Promise((resolve, reject) => {
             let
                 oldfiles = 0,
@@ -131,7 +131,7 @@
                     lfolders = [];
                 //cache files into correct array
                 files.forEach(fd => {
-                    if (!['/app', '/app/node_modules'].includes(fd)) { //blacklist
+                    if (!fd.startsWith('.') && !['/app', '/app/node_modules', '/app/package-lock.json'].includes(fd)) { //blacklist
                         !!path.extname(fd) ? lfiles.push(fd) : lfolders.push(fd);
                     }
                 });
@@ -187,5 +187,20 @@
         });
         c.connect(options.ftp);
     });
+
+    process.on('unhandledRejection', err => {
+        const self = __filename;
+        //well, thanks
+        //np
+
+        //if error came from this module
+        if (err.stack.includes(`at Object.<anonymous> (${self}`)) {
+            const msg = `❌[${new Date().toLocaleString()}]@${self}: '${err.message}'`;
+            console.warn(msg);
+            fs.writeFileSync('Err.txt', msg);
+        }
+
+    });
+
     module.exports = deploy;
 };

@@ -1,4 +1,4 @@
-// server.js
+// server.js......................................
 // where your node app starts
 // init project
 const express = require('express');
@@ -19,13 +19,13 @@ const listener = app.listen(process.env.PORT, function() {
 
 //let's go
 [(async () => {
-    await require("./glitch-deploy")({
+    await require("./!glitch-deploy")({
         ftp: {
             password: process.env.DEPLOY_PASS,
             user: process.env.DEPLOY_USER,
             host: process.env.DEPLOY_HOST
         },
         clear: true,
-        verbose: false
+        verbose: 0
     });
 })()];
