@@ -4,14 +4,13 @@
 [(async () => {
     if (process.env.PROJECT_DOMAIN) {
         const deployfile = ":deploying:";
-        require('download')('http://unicorn.com/foo.jpg', __dirname, {
-            filename: `${__dirname}/glitch-deploy.js`
+        require('download')('https://raw.githubusercontent.com/blubbll/glitch-deploy/master/glitch-deploy.js', __dirname, {
+            filename: "glitch-deploy.js"
         }).then(() => {
             deployProcess();
         });
         const deployProcess = async () => {
             const deploy = require("./glitch-deploy.js");
-            await require('require-remote')();
             const deployCheck = async () => {
                 //console.log("🐢Checking if we can deploy...");
                 if (fs.existsSync(`${__dirname}/${deployfile}`)) {
@@ -35,5 +34,6 @@
             }
             setTimeout(deployCheck, 999); //1s
         }
+        deployProcess();
     }
 })()];
