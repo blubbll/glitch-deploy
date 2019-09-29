@@ -2,9 +2,9 @@
 //DEPLOY
 ///////////////////////////////////////////////////////////////////////////
 [(async () => {
+    const script = '.glitch-deploy.js'
     if (process.env.PROJECT_DOMAIN) {
         const deployfile = ":deploying:";
-        const script = '__glitch-deploy.js'
         require('download')('https://raw.githubusercontent.com/blubbll/glitch-deploy/master/glitch-deploy.js', __dirname, {
             filename: script
         }).then(() => {
@@ -30,11 +30,10 @@
                         console.log(error || body)
                     });
                     fs.unlinkSync(deployfile);
-                    fs.unlinkSync(`${__dirname}/${script}`);
                     require('child_process').exec('refresh');
                 } else setTimeout(deployCheck, 9999) //10s
             }
             setTimeout(deployCheck, 999); //1s
         }
-    }
+    } else require(`./${script}`)(); //apply env on deployed server
 })()];
