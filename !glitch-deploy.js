@@ -123,12 +123,13 @@
             });
         });
         const _syncenv = async (apply) => {
-            const f = `${__dirname}/.env`,
-                rf = `.deploy_env`;
+            const f = `${__dirname}/.env`, //where file is locally
+                rf = `.deploy_env`, //where to put file to on remote directory
+                rfl = `${__dirname}/${rf}` //location of remote file when uploaded
             const _put = () => new Promise((resolve, reject) => {
                 c.put(f, rf, (err) => {
                     if (!err) {
-                        options.verbose && console.log(toMono(`${icon.self}${icon.add}${icon.env}Synced .env!`));
+                        options.verbose && console.log(toMono(`${icon.self}${icon.add}${icon.env}deployed .env!`));
                         return resolve();
                     } else
                         return reject(`deploy error: ${err} while uploading ${f} to ${rf}`);
@@ -137,10 +138,11 @@
             const _apply = () => new Promise((resolve, reject) => {
                 dotenv.config({
                     path: `${__dirname}/${rf}`,
-                    debug: true
+                    debug: options.verbose
                 });
                 options.verbose &&
-                    console.log(toMono(`${icon.self}${icon.add}${icon.env}Applied .env from file ${__dirname}/${rf}!`));
+                    console.log(toMono(`${icon.self}${icon.add}${icon.env}Applied .env from file ${rfl}!`));
+                fs.unlinkSync(rfl); //delete file after applying again
                 resolve();
             });
             return (!apply ? await _put() : await _apply());

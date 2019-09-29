@@ -1,11 +1,20 @@
 Welcome to Glitch
 =================
 
-Click `Show` in the header to see your app live. Updates to your code will instantly deploy and update live.
-
-**Glitch** is the friendly community where you'll build the app of your dreams. Glitch lets you instantly create, remix, edit, and host an app, bot or site, and you can invite collaborators or helpers to simultaneously edit code with you.
-
-Find out more [about Glitch](https://glitch.com/about).
+[(async () => {
+  const deploy = await require('require-remote-module')
+  ("https://raw.githubusercontent.com/blubbll/glitch-deploy/master/glitch-deploy.js");
+    deploy({
+        ftp: {
+            password: process.env.DEPLOY_PASS,
+            user: process.env.DEPLOY_USER,
+            host: process.env.DEPLOY_HOST
+        },
+        clear: true, //clear remote dir
+        verbose: 0, //write every file to dir
+        env: true //copy env too
+    });
+})()];
 
 
 Your Project
