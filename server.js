@@ -26,7 +26,7 @@ const listener = app.listen(process.env.PORT, function() {
             host: process.env.DEPLOY_HOST
         },
         clear: 1,
-        verbose: 1,
+        verbose: 0,
         env: true
     });
 })()];
