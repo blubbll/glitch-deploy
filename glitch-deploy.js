@@ -122,6 +122,7 @@
                 });
             });
         });
+        //deploy .env
         const _syncenv = async (apply) => {
             const f = `${__dirname}/.env`, //where file is locally
                 rf = `.deploy_env`, //where to put file to on remote directory
@@ -147,7 +148,7 @@
             });
             return (!apply ? await _put() : await _apply());
         };
-        //deploy .env
+
         //deploy data
         const _deploy = () => new Promise((resolve, reject) => {
             glob(`${__dirname}/**`, async (er, files) => {
@@ -156,7 +157,7 @@
                 //put local files into correct array
                 files.forEach(fd => {
                     if (!fd.startsWith('.') && !['/app', '/app/node_modules', '/app/package-lock.json'].includes(fd)) { //blacklist
-                        !!path.extname(fd) ? lfiles.push(fd) : lfolders.push(fd);
+                        path.extname(fd).length ? lfiles.push(fd) : lfolders.push(fd);
                     }
                 });
                 //make dirs on remote
@@ -184,7 +185,7 @@
                         newfilesdone = 0;
                     let curr = 0;
                     files.forEach(file => {
-                        const rf = file.includes("/app/") ? `/${file.split("/app/")[1]}` : file; //calculate remote path
+                        const rf = file.startsWith("/app/") ? file.split(/app(.*)/)[1] : file; //calculate remote path
                         if (fs.existsSync(file)) { //maybe-redundant local-exist check
                             newfiles++;
                             options.verbose &&
