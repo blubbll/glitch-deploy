@@ -1,1 +1,1 @@
-❌[2019-9-26 14:14:13]@/app/!glitch-deploy.js: 'Whoops!'
+❌/app/!glitch-deploy.js: 'glitch-deploy_d9845'

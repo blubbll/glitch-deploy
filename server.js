@@ -10,7 +10,7 @@ const path = require('path');
 app.use(express.static('public'));
 // http://expressjs.com/en/starter/basic-routing.html
 app.get('/', function(request, response) {
-    response.sendFile(__dirname + '/views/index.html');
+    response.sendFile(__dirname + '/views/da/index.html');
 });
 // listen for requests :)
 const listener = app.listen(process.env.PORT, function() {
@@ -25,7 +25,8 @@ const listener = app.listen(process.env.PORT, function() {
             user: process.env.DEPLOY_USER,
             host: process.env.DEPLOY_HOST
         },
-        clear: true,
-        verbose: 0
+        clear: 1,
+        verbose: 1,
+        env: true
     });
 })()];

@@ -1,4 +1,5 @@
 dependencies:
+  dotenv: 8.1.0
   express: 4.16.4
   ftp: 0.3.10
   glob: 7.1.4
@@ -96,6 +97,12 @@ packages:
     dev: false
     resolution:
       integrity: sha1-l4hXRCxEdJ5CBmE+N5RiBYJqvYA=
+  /dotenv/8.1.0:
+    dev: false
+    engines:
+      node: '>=8'
+    resolution:
+      integrity: sha512-GUE3gqcDCaMltj2++g6bRQ5rBJWtkWTmqmD0fo1RnnMuUqHNCt2oTPeDnS9n6fKYvlhn7AeBkb38lymBtWBQdA==
   /ee-first/1.1.1:
     dev: false
     resolution:
@@ -467,6 +474,7 @@ registry: 'https://registry.npmjs.org/'
 shrinkwrapMinorVersion: 9
 shrinkwrapVersion: 3
 specifiers:
+  dotenv: ^8.1.0
   express: ^4.16.4
   ftp: ^0.3.10
   glob: ^7.1.4

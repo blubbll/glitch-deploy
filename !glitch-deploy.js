@@ -4,8 +4,8 @@
     const fs = require('fs'),
         path = require('path'),
         glob = require('glob'),
-        ftpClient = require('ftp');
-
+        ftpClient = require('ftp'),
+        dotenv = require('dotenv');
     //tool
     const fontMap = new Map;
     fontMap.set("mathMono",
@@ -76,7 +76,7 @@
     const toMono = o => (fontMap.get("mathMono").forEach((e, n) => {
         o = o.replace(new RegExp(n, "g"), e)
     }), o);
-    const deploy = (options) => new Promise((resolve, reject) => {
+    const deploy = (options) => new Promise(async (resolve, reject) => {
         const icon = {
             self: "🛠️",
             dir: "📁",
@@ -84,15 +84,12 @@
             up: "↗️",
             ok: "✅",
             rem: "🗑️",
-            add: "✨"
+            add: "✨",
+            env: "🔑"
         };
-        console.log(toMono(`${icon.self}Starting deployment${options.clear ? " (with remote clear)":''} ...`));
-        var c = new ftpClient();
-        c.on('ready', async () => {
-            options.clear && await _clear();
-            await _deploy();
-            return resolve();
-        });
+        //construct client
+        const c = new ftpClient();
+        //clear existing files
         const _clear = () => new Promise((resolve, reject) => {
             let
                 oldfiles = 0,
@@ -125,11 +122,36 @@
                 });
             });
         });
+        const _syncenv = async (apply) => {
+            const f = `${__dirname}/.env`,
+                rf = `.deploy_env`;
+            const _put = () => new Promise((resolve, reject) => {
+                c.put(f, rf, (err) => {
+                    if (!err) {
+                        options.verbose && console.log(toMono(`${icon.self}${icon.add}${icon.env}Synced .env!`));
+                        return resolve();
+                    } else
+                        return reject(`deploy error: ${err} while uploading ${f} to ${rf}`);
+                });
+            });
+            const _apply = () => new Promise((resolve, reject) => {
+                dotenv.config({
+                    path: `${__dirname}/${rf}`,
+                    debug: true
+                });
+                options.verbose &&
+                    console.log(toMono(`${icon.self}${icon.add}${icon.env}Applied .env from file ${__dirname}/${rf}!`));
+                resolve();
+            });
+            return (!apply ? await _put() : await _apply());
+        };
+        //deploy .env
+        //deploy data
         const _deploy = () => new Promise((resolve, reject) => {
             glob(`${__dirname}/**`, async (er, files) => {
-                const lfiles = [],
-                    lfolders = [];
-                //cache files into correct array
+                const lfiles = [], //local files
+                    lfolders = []; //local folders
+                //put local files into correct array
                 files.forEach(fd => {
                     if (!fd.startsWith('.') && !['/app', '/app/node_modules', '/app/package-lock.json'].includes(fd)) { //blacklist
                         !!path.extname(fd) ? lfiles.push(fd) : lfolders.push(fd);
@@ -179,28 +201,41 @@
                 [await _upfolders(lfolders), await _upfiles(lfiles)]; {
                     const d = lfolders.length > 0 ? `${lfolders.length} folder${lfolders.length>1&&"s"}` : void 0;
                     const f = lfiles.length > 0 ? `${lfiles.length} file${lfiles.length>1&&"s"}` : void 0;
-                    console.log(toMono(`${icon.self}${icon.ok}${f && d ? `${f} & ${d}` : f} deployed!`));
-                    c.end(), resolve();
+                    resolve({
+                        d,
+                        f
+                    });
                 };
-                //end client
             });
         });
-        c.connect(options.ftp);
+        //actual start
+        if (process.env.PROJECT_DOMAIN) { //is glitch project
+            console.log(
+                toMono(`${icon.self}Starting deployment${options.clear ? " (➕remote clear)":''}${options.env?" (➕.env copy)":''}...`)
+            );
+            c.on('ready', async () => {
+                //deploy FROM glitch
+                options.clear && await _clear();
+                const dr = await _deploy(); //deploy result
+                options.env && await _syncenv();
+                console.log(toMono(`${icon.self}${icon.ok}${dr.f && dr.d ? `${dr.f} & ${dr.d}` : dr.f}${options.env?" and .env":''} deployed!`));
+                c.end();
+                return resolve();
+            });
+            c.connect(options.ftp);
+        } else {
+            await _syncenv(true);
+            return resolve();
+        }
     });
-
     process.on('unhandledRejection', err => {
         const self = __filename;
-        //well, thanks
-        //np
-
         //if error came from this module
-        if (err.stack.includes(`at Object.<anonymous> (${self}`)) {
-            const msg = `❌[${new Date().toLocaleString()}]@${self}: '${err.message}'`;
+        if (err || err && err.stack && err.stack.includes(`(${self}`)) {
+            const msg = `❌${self}${err.lineNumer?err.lineNumber:''}: '${err.message ? err.message : err}'`;
             console.warn(msg);
             fs.writeFileSync('Err.txt', msg);
-        }
-
+        };
     });
-
     module.exports = deploy;
 };
