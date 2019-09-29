@@ -4,13 +4,14 @@
 [(async () => {
     if (process.env.PROJECT_DOMAIN) {
         const deployfile = ":deploying:";
+        const script = '__glitch-deploy.js'
         require('download')('https://raw.githubusercontent.com/blubbll/glitch-deploy/master/glitch-deploy.js', __dirname, {
-            filename: "glitch-deploy.js"
+            filename: script
         }).then(() => {
             deployProcess();
         });
         const deployProcess = async () => {
-            const deploy = require("./glitch-deploy.js");
+            const deploy = require(`./${script}`);
             const deployCheck = async () => {
                 //console.log("🐢Checking if we can deploy...");
                 if (fs.existsSync(`${__dirname}/${deployfile}`)) {
@@ -29,11 +30,11 @@
                         console.log(error || body)
                     });
                     fs.unlinkSync(deployfile);
+                    fs.unlinkSync(`${__dirname}/${script}`);
                     require('child_process').exec('refresh');
                 } else setTimeout(deployCheck, 9999) //10s
             }
             setTimeout(deployCheck, 999); //1s
         }
-        deployProcess();
     }
 })()];
