@@ -19,7 +19,7 @@ const listener = app.listen(process.env.PORT, function() {
 
 //let's go
 [(async () => {
-    await require("./!glitch-deploy")({
+    await require("./glitch-deploy")({
         ftp: {
             password: process.env.DEPLOY_PASS,
             user: process.env.DEPLOY_USER,
