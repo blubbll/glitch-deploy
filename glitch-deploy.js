@@ -111,7 +111,7 @@
                         }
                         //delete remote files
                     } else {
-                        if (file.name !== ".𝚏𝚝𝚙𝚚𝚞𝚘𝚝𝚊") { //skip indeletable file
+                        if (file.name !== '.ftpquota') { //skip indeletable file
                             oldfiles++;
                             c.delete(file.name, () => {
                                 options.verbose &&
