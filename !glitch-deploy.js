@@ -184,7 +184,7 @@
                         newfilesdone = 0;
                     let curr = 0;
                     files.forEach(file => {
-                        const rf = `/${file.split("/app/")[1]}`; //calculate remote path
+                        const rf = file.includes("/app/") ? `/${file.split("/app/")[1]}` : file; //calculate remote path
                         if (fs.existsSync(file)) { //maybe-redundant local-exist check
                             newfiles++;
                             options.verbose &&
@@ -194,7 +194,7 @@
                                 if (newfilesdone === newfiles) {
                                     resolve();
                                 };
-                                if (err) return reject(`deploy error: ${err} while uploading ${file} to ${rf}`);
+                                if (err) return reject(`deploy error: '${err}' while uploading ${file} to ${rf}`);
                             });
                         }
                     });
