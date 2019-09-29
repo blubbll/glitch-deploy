@@ -111,13 +111,15 @@
                         }
                         //delete remote files
                     } else {
-                        oldfiles++;
-                        c.delete(file.name, () => {
-                            options.verbose &&
-                                console.log(toMono(`${icon.self}${icon.rem}${icon.file}deleting remote file '${file.name}'...`));
-                            oldfilesgone++;
-                            if (oldfilesgone + oldfoldersgone === oldfiles + oldfolders) resolve();
-                        });
+                        if (file.name !== ".𝚏𝚝𝚙𝚚𝚞𝚘𝚝𝚊") { //skip indeletable file
+                            oldfiles++;
+                            c.delete(file.name, () => {
+                                options.verbose &&
+                                    console.log(toMono(`${icon.self}${icon.rem}${icon.file}deleting remote file '${file.name}'...`));
+                                oldfilesgone++;
+                                if (oldfilesgone + oldfoldersgone === oldfiles + oldfolders) resolve();
+                            });
+                        }
                     }
                 });
             });
