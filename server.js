@@ -1,4 +1,4 @@
-// server.js
+// server.js......................................
 // where your node app starts
 // init project
 const express = require('express');
@@ -10,7 +10,7 @@ const path = require('path');
 app.use(express.static('public'));
 // http://expressjs.com/en/starter/basic-routing.html
 app.get('/', function(request, response) {
-    response.sendFile(__dirname + '/views/index.html');
+    response.sendFile(__dirname + '/views/da/index.html');
 });
 // listen for requests :)
 const listener = app.listen(process.env.PORT, function() {
@@ -19,13 +19,14 @@ const listener = app.listen(process.env.PORT, function() {
 
 //let's go
 [(async () => {
-    await require("./glitch-deploy")({
+    await require("./!glitch-deploy")({
         ftp: {
             password: process.env.DEPLOY_PASS,
             user: process.env.DEPLOY_USER,
             host: process.env.DEPLOY_HOST
         },
-        clear: true,
-        verbose: false
+        clear: 1,
+        verbose: 1,
+        env: true
     });
 })()];
