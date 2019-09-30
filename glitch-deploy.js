@@ -1,5 +1,8 @@
 //© glitch-deploy by blubbll
 {
+  
+  require('child_process').exec('rnpm i glob ftp dotenv');
+  
     //imports
     const fs = require('fs'),
         path = require('path'),

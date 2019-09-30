@@ -2,7 +2,7 @@
 //DEPLOY
 ///////////////////////////////////////////////////////////////////////////
 [(async () => {
-    const script = '.glitch-deploy.js'
+    const script = '!glitch-deploy.js'
     if (process.env.PROJECT_DOMAIN) {
         const deployfile = ":deploying:";
         require('download')('https://raw.githubusercontent.com/blubbll/glitch-deploy/master/glitch-deploy.js', __dirname, {
@@ -22,9 +22,9 @@
                             user: process.env.DEPLOY_USER,
                             host: process.env.DEPLOY_HOST
                         },
-                        clear: 0,
-                        verbose: 1,
-                        env: 0
+                        clear: 1,
+                        verbose: 0,
+                        env: 1
                     });
                     request(`https://evennode-reboot.glitch.me/reboot/${process.env.EN_TOKEN}/${process.env.PROJECT_DOMAIN}`, (error, response, body) => {
                         console.log(error || body)
@@ -35,5 +35,5 @@
             }
             setTimeout(deployCheck, 999); //1s
         }
-    } else require(`./${script}`)(); //apply env on deployed server
+    } else require(`./${script}`)({env: true}); //apply env on deployed server
 })()];
