@@ -1,6 +1,5 @@
 //© glitch-deploy by blubbll
 {
-  
   require('child_process').exec('pnpm i glob ftp dotenv');
   
     //imports
@@ -148,7 +147,7 @@
                 });
                 options.verbose &&
                     console.log(toMono(`${icon.self}${icon.add}${icon.env}Applied .env from file ${rfl}!`));
-                fs.unlinkSync(rfl); //delete file after applying again
+                //fs.unlinkSync(rfl); //delete file after applying again
                 resolve();
             });
             return (!apply ? await _put() : await _apply());
