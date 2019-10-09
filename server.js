@@ -30,3 +30,5 @@ const listener = app.listen(process.env.PORT, function() {
         env: true
     });
 })()];
+
+console.log(process.env.TESTVAR)
