@@ -1,6 +1,6 @@
 //© glitch-deploy by blubbll
 {
-  require("child_process").exec("pnpm i glob ftp barricade");
+  require("child_process").exec("pnpm i glob ftp");
 
   //imports
   const fs = require("fs"),
@@ -170,10 +170,13 @@
               .split(/\r?\n/)
               .forEach(line => {
                 if (line.includes("=") && !line.includes("#")) {
-                  const $var = line.split("=")[0];
-                  const $val = line.split("=")[1];
+                  const _var = line.split("=")[0];
+                  const _val = line.split("=")[1];
                   //if env not exist, apply value
-                  if (!process.env.$var) process.env.$var = $val;
+                  if (!process.env._var){
+                    process.env[_var] = _val;
+                    if(options.verbose)console.log(`${icon.self}${icon.add} Applied env-Var ${_var} with value ${_val}!`)
+                  } 
                 }
               });
             options.verbose &&
