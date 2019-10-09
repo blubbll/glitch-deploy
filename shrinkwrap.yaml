@@ -1,4 +1,5 @@
 dependencies:
+  barricade: 1.0.3
   dotenv-safe: 8.1.0
   express: 4.16.4
   ftp: 0.3.10
@@ -13,6 +14,12 @@ packages:
       node: '>= 0.6'
     resolution:
       integrity: sha1-63d99gEXI6OxTopywIBcjoZ0a9I=
+  /argparse/1.0.10:
+    dependencies:
+      sprintf-js: 1.0.3
+    dev: false
+    resolution:
+      integrity: sha512-o5Roy6tNG4SL/FOkCAN6RzjiakZS25RLYFrcMttJqbdd8BWrnA+fGz57iN5Pb06pvBGvl5gQ0B48dJlslXvoTg==
   /array-flatten/1.1.1:
     dev: false
     resolution:
@@ -21,6 +28,12 @@ packages:
     dev: false
     resolution:
       integrity: sha1-ibTRmasr7kneFk6gK4nORi1xt2c=
+  /barricade/1.0.3:
+    dependencies:
+      yamljs: 0.3.0
+    dev: false
+    resolution:
+      integrity: sha1-HQeV3bGtde95A2M0It3rvewcGuQ=
   /body-parser/1.18.3:
     dependencies:
       bytes: 3.0.0
@@ -425,6 +438,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-BvE/TwpZX4FXExxOxZyRGQQv651MSwmWKZGqvmPcRIjDqWub67kTKuIMx43cZZrS/cBBzwBcNDWoFxt2XEFIpQ==
+  /sprintf-js/1.0.3:
+    dev: false
+    resolution:
+      integrity: sha1-BOaSb2YolTVPPdAVIDYzuFcpfiw=
   /statuses/1.4.0:
     dev: false
     engines:
@@ -476,10 +493,19 @@ packages:
     dev: false
     resolution:
       integrity: sha1-UqY+VsoLhKfzpfPWGHLxJq16WUM=
+  /yamljs/0.3.0:
+    dependencies:
+      argparse: 1.0.10
+      glob: 7.1.4
+    dev: false
+    hasBin: true
+    resolution:
+      integrity: sha512-C/FsVVhht4iPQYXOInoxUM/1ELSf9EsgKH34FofQOp6hwCPrW4vG4w5++TED3xRUo8gD7l0P1J1dLlDYzODsTQ==
 registry: 'https://registry.npmjs.org/'
 shrinkwrapMinorVersion: 9
 shrinkwrapVersion: 3
 specifiers:
+  barricade: ^1.0.3
   dotenv-safe: ^8.1.0
   express: ^4.16.4
   ftp: ^0.3.10
