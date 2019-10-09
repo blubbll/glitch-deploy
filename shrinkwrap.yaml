@@ -1,7 +1,5 @@
 dependencies:
-  dotenv: 8.1.0
   dotenv-safe: 8.1.0
-  envy: 2.0.0
   express: 4.16.4
   ftp: 0.3.10
   glob: 7.1.4
@@ -53,22 +51,6 @@ packages:
       node: '>= 0.8'
     resolution:
       integrity: sha1-0ygVQE1olpn4Wk6k+odV3ROpYEg=
-  /camelcase-keys/5.2.0:
-    dependencies:
-      camelcase: 5.3.1
-      map-obj: 3.1.0
-      quick-lru: 1.1.0
-    dev: false
-    engines:
-      node: '>=6'
-    resolution:
-      integrity: sha512-mSM/OQKD1HS5Ll2AXxeaHSdqCGC/QQ8IrgTbKYA/rxnC36thBKysfIr9+OVBWuW17jyZF4swHkjtglawgBmVFg==
-  /camelcase/5.3.1:
-    dev: false
-    engines:
-      node: '>=6'
-    resolution:
-      integrity: sha512-L28STB170nwWS63UjtlEOE3dldQApaJXZkOI1uMFfzf3rRuPegHaHesyee+YxQ+W6SvRDQV6UrdOdRiR153wJg==
   /concat-map/0.0.1:
     dev: false
     resolution:
@@ -137,18 +119,6 @@ packages:
       node: '>= 0.8'
     resolution:
       integrity: sha1-rT/0yG7C0CkyL1oCw6mmBslbP1k=
-  /envy/2.0.0:
-    dependencies:
-      camelcase: 5.3.1
-      camelcase-keys: 5.2.0
-      filter-obj: 1.1.0
-      is-wsl: 1.1.0
-      path-type: 3.0.0
-    dev: false
-    engines:
-      node: '>=8'
-    resolution:
-      integrity: sha512-jNGMPzaDCfTsaW1Mp4nPyZ4HM3tnKNxOiMLPN7pi5LAgeHo7pHdJPdCHfQuLBZGK+Ok8Nc9Z3Py+ebKM3n3BgQ==
   /escape-html/1.0.3:
     dev: false
     resolution:
@@ -196,12 +166,6 @@ packages:
       node: '>= 0.10.0'
     resolution:
       integrity: sha512-j12Uuyb4FMrd/qQAm6uCHAkPtO8FDTRJZBDd5D2KOL2eLaz1yUNdUB/NOIyq0iU4q4cFarsUCrnFDPBcnksuOg==
-  /filter-obj/1.1.0:
-    dev: false
-    engines:
-      node: '>=0.10.0'
-    resolution:
-      integrity: sha1-mzERErxsYSehbgFsbF1/GeCAXFs=
   /finalhandler/1.1.1:
     dependencies:
       debug: 2.6.9
@@ -292,22 +256,10 @@ packages:
       node: '>= 0.10'
     resolution:
       integrity: sha1-6qM9bd16zo9/b+DJygRA5wZzix4=
-  /is-wsl/1.1.0:
-    dev: false
-    engines:
-      node: '>=4'
-    resolution:
-      integrity: sha1-HxbkqiKwTRM2tmGIpmrzxgDDpm0=
   /isarray/0.0.1:
     dev: false
     resolution:
       integrity: sha1-ihis/Kmo9Bd+Cav8YDiTmwXR7t8=
-  /map-obj/3.1.0:
-    dev: false
-    engines:
-      node: '>=6'
-    resolution:
-      integrity: sha512-Xg1iyYz/+iIW6YoMldux47H/e5QZyDSB41Kb0ev+YYHh3FJnyyzY0vTk/WbVeWcCvdXd70cOriUBmhP8alUFBA==
   /media-typer/0.3.0:
     dev: false
     engines:
@@ -389,20 +341,6 @@ packages:
     dev: false
     resolution:
       integrity: sha1-32BBeABfUi8V60SQ5yR6G/qmf4w=
-  /path-type/3.0.0:
-    dependencies:
-      pify: 3.0.0
-    dev: false
-    engines:
-      node: '>=4'
-    resolution:
-      integrity: sha512-T2ZUsdZFHgA3u4e5PfPbjd7HDDpxPnQb5jN0SrDsjNSuVXHJqtwTnWqG0B1jZrgmJ/7lj1EmVIByWt1gxGkWvg==
-  /pify/3.0.0:
-    dev: false
-    engines:
-      node: '>=4'
-    resolution:
-      integrity: sha1-5aSs0sEB/fPZpNB/DbxNtJ3SgXY=
   /proxy-addr/2.0.4:
     dependencies:
       forwarded: 0.1.2
@@ -418,12 +356,6 @@ packages:
       node: '>=0.6'
     resolution:
       integrity: sha512-N5ZAX4/LxJmF+7wN74pUD6qAh9/wnvdQcjq9TZjevvXzSUo7bfmw91saqMjzGS2xq91/odN2dW/WOl7qQHNDGA==
-  /quick-lru/1.1.0:
-    dev: false
-    engines:
-      node: '>=4'
-    resolution:
-      integrity: sha1-Q2CxfGETatOAeDl/8RQW4Ybc+7g=
   /range-parser/1.2.0:
     dev: false
     engines:
@@ -548,9 +480,7 @@ registry: 'https://registry.npmjs.org/'
 shrinkwrapMinorVersion: 9
 shrinkwrapVersion: 3
 specifiers:
-  dotenv: ^8.1.0
   dotenv-safe: ^8.1.0
-  envy: ^2.0.0
   express: ^4.16.4
   ftp: ^0.3.10
   glob: ^7.1.4
