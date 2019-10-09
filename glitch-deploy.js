@@ -1,13 +1,12 @@
 //© glitch-deploy by blubbll
 {
-  require('child_process').exec('pnpm i glob ftp dotenv-safe');
+  require('child_process').exec('pnpm i glob ftp barricade');
   
     //imports
     const fs = require('fs'),
         path = require('path'),
         glob = require('glob'),
-        ftpClient = require('ftp'),
-        dotenv = require('dotenv-safe');
+        ftpClient = require('ftp')
     //tool
     const fontMap = new Map;
     fontMap.set("mathMono",
@@ -129,7 +128,7 @@
         //deploy .env
         const _syncenv = async (apply) => {
             const f = `${__dirname}/.env`, //where file is locally
-                rf = `.env.example`, //where to put file to on remote directory
+                rf = `env.yml`, //where to put file to on remote directory
                 rfl = `${__dirname}/${rf}` //location of remote file when uploaded
             const _put = () => new Promise((resolve, reject) => {
                 c.put(f, rf, (err) => {
@@ -141,10 +140,7 @@
                 });
             });
             const _apply = () => new Promise((resolve, reject) => {
-                dotenv.config({
-                    path: `${__dirname}/${rf}`,
-                    debug: options.verbose
-                });
+                require('barricade');
                 options.verbose &&
                     console.log(toMono(`${icon.self}${icon.add}${icon.env}Applied .env from file ${rfl}!`));
                 //fs.unlinkSync(rfl); //delete file after applying again
