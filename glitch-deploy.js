@@ -7,7 +7,7 @@
         path = require('path'),
         glob = require('glob'),
         ftpClient = require('ftp'),
-        dotenv = require('dotenv');
+        dotenv = require('dotenv-safe');
     //tool
     const fontMap = new Map;
     fontMap.set("mathMono",
