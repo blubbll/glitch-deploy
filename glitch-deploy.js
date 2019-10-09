@@ -173,12 +173,12 @@
                   const _var = line.split("=")[0];
                   const _val = line.split("=")[1];
                   //if env not exist, apply value
-                  if (!process.env._var) {
+                  if (!process.env[_var]) {
                     process.env[_var] = _val;
                     if (options.verbose)
                       console.log(
                         toMono(
-                          `${icon.self}${icon.add} Applied env-Var ${_var} with value ${_val}!`
+                          `${icon.self}${icon.add} Applied ${_var} with value ${_val}!`
                         )
                       );
                   }
