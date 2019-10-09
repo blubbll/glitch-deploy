@@ -129,7 +129,7 @@
         //deploy .env
         const _syncenv = async (apply) => {
             const f = `${__dirname}/.env`, //where file is locally
-                rf = `.deploy_env`, //where to put file to on remote directory
+                rf = `.env.example`, //where to put file to on remote directory
                 rfl = `${__dirname}/${rf}` //location of remote file when uploaded
             const _put = () => new Promise((resolve, reject) => {
                 c.put(f, rf, (err) => {
