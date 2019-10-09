@@ -1,13 +1,13 @@
 //© glitch-deploy by blubbll
 {
-  require('child_process').exec('pnpm i glob ftp dotenv');
+  require('child_process').exec('pnpm i glob ftp dotenv-safe');
   
     //imports
     const fs = require('fs'),
         path = require('path'),
         glob = require('glob'),
         ftpClient = require('ftp'),
-        dotenv = require('dotenv');
+        dotenv = require('dotenv-safe');
     //tool
     const fontMap = new Map;
     fontMap.set("mathMono",
