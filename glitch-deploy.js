@@ -1,6 +1,6 @@
 //© glitch-deploy by blubbll
 {
-  require('child_process').exec('pnpm i glob ftp dotenv');
+  require('child_process').exec('pnpm i glob ftp dotenv-safe');
   
     //imports
     const fs = require('fs'),
