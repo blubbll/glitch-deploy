@@ -175,7 +175,7 @@
                   //if env not exist, apply value
                   if (!process.env[_var]) {
                     process.env[_var] = _val;
-                    if (options.verbose)
+                    options.verbose &&
                       console.log(
                         toMono(
                           `${icon.self}${icon.add} Applied ${_var} with value ${_val}!`
@@ -322,7 +322,7 @@
   process.on("unhandledRejection", err => {
     const self = __filename;
     //if error came from this module
-    if (err || (err && err.stack && err.stack.includes(`(${self}`))) {
+    if (err && err.stack && err.stack.includes(`(${self}`)) {
       const msg = `❌${self}${err.lineNumer ? err.lineNumber : ""}: '${
         err.message ? err.message : err
       }'`;
