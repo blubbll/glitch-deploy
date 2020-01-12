@@ -18,7 +18,7 @@ const listener = app.listen(process.env.PORT, function() {
 });
 
 //let's go
-[(async () => {
+/*[(async () => {
     await require("./glitch-deploy")({
         ftp: {
             password: process.env.DEPLOY_PASS,
@@ -29,6 +29,6 @@ const listener = app.listen(process.env.PORT, function() {
         verbose: 0,
         env: true
     });
-})()];
+})()];*/
 
 console.log(process.env.TESTVAR)
